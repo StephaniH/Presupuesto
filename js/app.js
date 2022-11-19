@@ -1,7 +1,6 @@
 const ingresos = [
     new Ingreso('Sueldo', 2100),
-    new Ingreso('Venta coche', 1500),
-    new Ingreso('Coperacha', 1000)
+    new Ingreso('Venta coche', 1500)
 ];
 
 const egresos = [
@@ -46,7 +45,7 @@ let cargarCabecero = () => {
 }
 
 formatoMoneda = (valor)=>{
-    return valor.toLocaleString('en-GB', {style:'currency', currency:'MXN', minimumFractionDigits: 2});
+    return valor.toLocaleString('en-GB', {style:'currency', currency:'GBP', minimumFractionDigits: 2});
 }
 
 formatoPorcentaje = (valor)=>{
@@ -121,4 +120,25 @@ eliminarEgreso = (id) => {
     egresos.splice(indiceEliminado,1);
     cargarCabecero();
     cargarEgresos();
+}
+
+agregarDato = () => {
+    let forma = document.forms['forma'];
+    let tipo = forma['tipo'];
+    let descripcion = forma['descripcion'];
+    let valor = forma['valor'];
+
+    if(descripcion.value != '' && valor.value != ''){
+        if (tipo.value == 'ingreso') {
+            ingresos.push(new Ingreso(descripcion.value, +valor.value));
+            cargarCabecero();
+            cargarIngresos();
+        }
+
+        else if(tipo.value == 'egreso'){
+            egresos.push(new Egreso(descripcion.value, +valor.value));
+            cargarCabecero();
+            cargarEgresos();
+        }
+    }
 }
